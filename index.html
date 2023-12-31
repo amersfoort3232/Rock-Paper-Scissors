@@ -1,69 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rock Paper Scissor</title>
-</head>
-<body>
+    <link rel="stylesheet" href="mystyle.css">
+  </head>
+  <body>
     <script>
-        function getComputerChoice(){
-            const choices = ['rock', 'paper', 'scissors'];
-            const randomNumber = Math.floor(Math.random() * 3);
-            return choices[randomNumber];
+      let playerScore = 0;
+      let computerScore = 0;
+      function getComputerChoice() {
+        const choices = ["rock", "paper", "scissors"];
+        const randomNumber = Math.floor(Math.random() * 3);
+        return choices[randomNumber];
+      }
+      function playRound(playerSelection, computerSelection) {
+        if (playerSelection === computerSelection) {
+          return "It's a tie!";
         }
-        function playRound(playerSelection, computerSelection){
-            if(playerSelection === computerSelection){
-                return 'It\'s a tie!';
-            }
-            if(playerSelection === 'rock'){
-                if(computerSelection === 'paper'){
-                    return 'You lose! Paper beats Rock';
-                }else{
-                    return 'You win! Rock beats Scissors';
-                }
-            }
-            if(playerSelection === 'paper'){
-                if(computerSelection === 'scissors'){
-                    return 'You lose! Scissors beats Paper';
-                }else{
-                    return 'You win! Paper beats Rock';
-                }
-            }
-            if(playerSelection === 'scissors'){
-                if(computerSelection === 'rock'){
-                    return 'You lose! Rock beats Scissors';
-                }else{
-                    return 'You win! Scissors beats Paper';
-                }
-            }
+        if (playerSelection === "rock") {
+          if (computerSelection === "paper") {
+            return "You lose! Paper beats Rock";
+          } else {
+            return "You win! Rock beats Scissors";
+          }
         }
-        function game(){
-            let playerScore = 0;
-            let computerScore = 0;
-            for(let i = 0; i < 5; i++){
-                const playerSelection = prompt('Enter your choice: ');
-                const computerSelection = getComputerChoice();
-                const result = playRound(playerSelection, computerSelection);
-                console.log(result);
-                if(result.includes('win')){
-                    playerScore++;
-                }else if(result.includes('lose')){
-                    computerScore++;
-                }
-            }
-            if(playerScore > computerScore){
-                console.log('You win the game!');
-            }else if(playerScore < computerScore){
-                console.log('You lose the game!');
-            }else{
-                console.log('It\'s a tie!');
-            }
+        if (playerSelection === "paper") {
+          if (computerSelection === "scissors") {
+            return "You lose! Scissors beats Paper";
+          } else {
+            return "You win! Paper beats Rock";
+          }
         }
-        
-        const playerSelection = 'rock';
-        const computerSelection = getComputerChoice();
-        console.log(game());
+        if (playerSelection === "scissors") {
+          if (computerSelection === "rock") {
+            return "You lose! Rock beats Scissors";
+          } else {
+            return "You win! Scissors beats Paper";
+          }
+        }
+      }
+/*       function game() {
+        const result = playRound(playerSelection, computerSelection);
+        if (result.includes("win")) {
+          playerScore++;
+        } else if (result.includes("lose")) {
+          computerScore++;
+        }
+        if (playerScore > computerScore) {
+          console.log("You win the game!");
+        } else if (playerScore < computerScore) {
+          console.log("You lose the game!");
+        } else {
+          console.log("It's a tie!");
+        }
+      } */
     </script>
-</body>
+    <button id="rock">Rock</button>
+    <button id="paper">Paper</button>
+    <button id="scissors">Scissors</button>
+    <p id="score"></p>
+    <p id="result"></p>
+    <button id="reset" onclick="window.location.reload();">Reset</button>
+      <script>
+      const rock = document.querySelector("#rock");
+      const paper = document.querySelector("#paper");
+      const scissors = document.querySelector("#scissors");
+      rock.addEventListener("click", () => {
+        game("rock");
+      });
+      paper.addEventListener("click", () => {
+        game("paper");
+      });
+      scissors.addEventListener("click", () => {
+        game("scissors");
+      });
+      function disableButtons() {
+        rock.disabled = true;
+        paper.disabled = true;
+        scissors.disabled = true;
+      }
+      function game(playerSelection) {
+        const computerSelection = getComputerChoice();
+        const result = playRound(playerSelection, computerSelection);
+        console.log(result);
+        if (result.includes("win")) {
+          playerScore++;
+          document.getElementById("result").innerHTML = "You win this round!";
+        } else if (result.includes("lose")) {
+          computerScore++;
+          document.getElementById("result").innerHTML = "You lose this round!";
+        } else {
+          document.getElementById("result").innerHTML = "It's a tie!";
+        }
+        if (playerScore == 5) {
+          document.getElementById("result").innerHTML = "You win the game!";
+          disableButtons();
+          
+        } else if (computerScore == 5) {
+          document.getElementById("result").innerHTML = "You lose the game!";
+          disableButtons();
+        }
+        var current_result= "Player Score: " + playerScore + " Computer Score: " + computerScore;
+        document.getElementById("score").innerHTML = current_result;
+        }
+    </script>
+  </body>
 </html>
